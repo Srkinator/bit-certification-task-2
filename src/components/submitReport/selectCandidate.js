@@ -6,6 +6,8 @@ import { communicationService } from '../../services/communication';
 import './selectCandidate.css';
 import Search from '../common/search';
 
+var candidatePlaceholder = "http://style.anu.edu.au/_anu/4/images/placeholders/person.png";
+
 class SelectCandidate extends Component {
     constructor(props) {
         super(props);
@@ -33,7 +35,8 @@ class SelectCandidate extends Component {
         return (
             this.state.candidates.map((candidate) => {
                 return (
-                    <div id={candidate.id} onClick={(event) => this.selectCandidate(candidate,event.currentTarget)} key={candidate.id} className="col-5 candidate-card">
+                    <div id={candidate.id} onClick={(event) => this.selectCandidate(candidate, event.currentTarget)} key={candidate.id} className="col-5 candidate-card">
+                        {candidate.avatar ? <img src={candidate.avatar} /> : <img src={candidatePlaceholder} />}
                         <h3>{candidate.name}</h3>
                         <p>{candidate.email}</p>
                     </div>
@@ -43,15 +46,19 @@ class SelectCandidate extends Component {
     }
 
     selectCandidate = (info, event) => {
-        event.setAttribute("style","background-color:orange");
+        if (event.hasAttribute("style")) {
+            event.removeAttribute("style")
+        }
+        else {
+            event.setAttribute("style", "background-color:orange");
+        }
         const makeButtonAvailable = document.getElementsByTagName("button")[0];
         makeButtonAvailable.removeAttribute("class");
         makeButtonAvailable.setAttribute("class", "btn btn-primary");
-
+        
         localStorage.setItem("candidateID", info.id);
-
+        
     }
-
 
     render() {
         if (this.state.candidates.length === 0) {
