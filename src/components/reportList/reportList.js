@@ -1,3 +1,5 @@
+/*global event*/
+/*eslint no-restricted-globals: ["error", "event"]*/
 import React, { Component } from 'react';
 import Modal from "react-modal";
 
@@ -50,13 +52,38 @@ class ReportList extends Component {
                             <h3>{report.status}</h3>
                         </td>
                         <td>
-                            <img onClick={() => { this.setState({ showModal: true, modalInfo: report }) }} alt="viewIcon" src={modalIcon} />
-                            <img alt="deleteIcon" src={deleteIcon} />
+                            <img onClick={() => this.openModal(report)} alt="viewIcon" src={modalIcon} />
+                            <img onClick={() => this.deleteReport(report)} alt="deleteIcon" src={deleteIcon} />
                         </td>
                     </tr>
                 )
             })
         );
+    }
+
+    openModal = (info) => {
+        this.setState({
+            showModal: true,
+            modalInfo: info
+        });
+    }
+
+    deleteReport = (reportInfo) => {
+        console.log(reportInfo);
+        let confirmDelete = confirm("Are you sure you want to delete this report?");
+
+        if (confirmDelete == true){
+            communicationService.deleteReport(reportInfo.id,(response)=>{
+                console.log(response);
+            }, (error)=>{
+                console.log(error);
+            });
+            this.loadData();
+        }
+        else{
+            this.loadData();
+        }
+
     }
 
     componentDidMount() {

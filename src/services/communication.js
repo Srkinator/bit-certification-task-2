@@ -16,5 +16,19 @@ class CommunicationService {
                 errorHandler(error);
             });
     }
+
+    deleteReport(id, dataHandler, errorHandler) {
+        axios({
+            method: "DELETE",
+            url: `${URL}/reports/${id}`,
+        })
+            .then((data) => {
+                 dataHandler(data)
+                })
+            .catch((error) => {
+                errorHandler(error);
+            });
+    }
+
 }
 export const communicationService = new CommunicationService();
