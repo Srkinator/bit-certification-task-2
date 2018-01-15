@@ -33,7 +33,7 @@ class SelectCandidate extends Component {
         return (
             this.state.candidates.map((candidate) => {
                 return (
-                    <div id={candidate.id} onClick={() => this.selectCandidate(candidate, this)} key={candidate.id} className="col-5 candidate-card">
+                    <div id={candidate.id} onClick={(event) => this.selectCandidate(candidate,event.currentTarget)} key={candidate.id} className="col-5 candidate-card">
                         <h3>{candidate.name}</h3>
                         <p>{candidate.email}</p>
                     </div>
@@ -43,7 +43,7 @@ class SelectCandidate extends Component {
     }
 
     selectCandidate = (info, event) => {
-        console.log(event);
+        event.setAttribute("style","background-color:orange");
         const makeButtonAvailable = document.getElementsByTagName("button")[0];
         makeButtonAvailable.removeAttribute("class");
         makeButtonAvailable.setAttribute("class", "btn btn-primary");
