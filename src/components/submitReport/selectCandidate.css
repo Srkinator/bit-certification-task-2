@@ -1,0 +1,26 @@
+.candidate-card {
+    width: fit-content;
+    display: inline-block;
+}
+
+input{
+    width: 60%;
+    margin-bottom: 10%;
+}
+
+ol {
+    margin-bottom: 10%
+}
+ol li {
+    font-size: 2em;
+    margin: 10% 0px;
+}
+
+button{
+    width: 30%;
+    display: block;
+}
+
+.wizard-selector{
+    border-right: 1px black solid;
+}

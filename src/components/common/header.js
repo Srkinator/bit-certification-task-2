@@ -14,7 +14,7 @@ class Header extends Component {
                     <div className="col-6">
                         <ul>
                             <Link to="/"><li>Reports</li></Link>
-                            <Link to="/create"><li>New Report</li></Link>
+                            <Link to="/selectCandidate"><li>New Report</li></Link>
                         </ul>
                     </div>
                 </div>
