@@ -1,0 +1,45 @@
+table tr{
+    border-bottom: 1px grey solid;
+    border-right: 1px grey solid;
+}
+tr img {
+    width: 15%;
+    margin: 0 10%;
+}
+tr td {
+    width: 20%;
+    border-right: 1px grey solid;
+    border-bottom: 1px grey solid;
+    text-align: center;
+}
+
+th{
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.modal-info{
+    border-bottom:1px solid grey;
+}
+
+.modal-dialog{
+    min-width: 40%;
+}
+.modal-dialog h4{
+    color: grey;
+    padding-top: 10px;
+}
+
+.modal-title{
+    float: left;
+}
+.modal-header{
+    display: block;
+}
+
+tr img:hover{
+    cursor: pointer;
+}
+.ReactModal__Body--open{
+    background-color: rgb(73, 73, 73);
+}

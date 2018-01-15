@@ -17,4 +17,4 @@ class CommunicationService {
             });
     }
 }
-export const CommunicationService = new CommunicationService();
+export const communicationService = new CommunicationService();
