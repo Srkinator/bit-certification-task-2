@@ -1,0 +1,29 @@
+.header{
+    background-color: 	#cececa;
+    color: rgb(0, 0, 0);
+    width: 100%;
+    margin-bottom: 5%;
+}
+.header ul{
+    list-style-type: none;
+    margin-top: 20px;
+}
+.header ul li{
+    display: inline;
+    padding: 0px 10px;
+    border: 1px black solid;
+    background-color: white;
+}
+
+.header ul a{
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+}
+.header h1{
+    font-size: 2em;
+    padding-top: 15px;
+}
+.header .row{
+    padding: 0;
+    margin: 0;
+}
