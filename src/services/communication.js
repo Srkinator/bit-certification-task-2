@@ -30,5 +30,20 @@ class CommunicationService {
             });
     }
 
+    submitReport(data, dataHandler, errorHandler) {
+        console.log(data);
+        axios({
+            method: "POST",
+            url: `${URL}/reports`,
+            data: data
+        })
+            .then((data) => {
+                 dataHandler(data)
+                })
+            .catch((error) => {
+                errorHandler(error);
+            });
+    }
+
 }
 export const communicationService = new CommunicationService();
