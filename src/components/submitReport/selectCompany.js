@@ -13,7 +13,8 @@ class SelectCompany extends Component {
         super(props);
 
         this.state = {
-            companies: []
+            companies: [],
+            filterCompanies: []
         }
 
         this.redirection = new RedirectionService();
@@ -24,7 +25,8 @@ class SelectCompany extends Component {
     loadCompanies = () => {
         communicationService.getData("companies", (data) => {
             this.setState({
-                companies: data.data
+                companies: data.data,
+                filterCompanies: data.data
             })
         }, (error) => {
             console.log(error);
@@ -37,7 +39,7 @@ class SelectCompany extends Component {
 
     renderCompanies = () => {
         return (
-            this.state.companies.map((company) => {
+            this.state.filterCompanies.map((company) => {
                 return (
                     <li onClick={(event) => this.selectCompany(company, event.currentTarget)} key={company.id} className="company-card">
                         {company.name}
@@ -97,6 +99,23 @@ class SelectCompany extends Component {
         this.redirection.redirect("selectCandidate");
     }
 
+    searchHandler = (searchTerm) => {
+        let listOfCompanies = this.state.companies;
+        if (searchTerm === "") {
+            this.setState({
+                filterCompanies: listOfCompanies
+            });
+        }
+        else {
+            let filteredList = listOfCompanies.filter(company => {
+                return company.name.toUpperCase().includes(searchTerm.toUpperCase());
+            });
+            this.setState({
+                filterCompanies: filteredList
+            });
+        }
+    }
+
     render() {
         if (this.state.companies.length === 0) {
             return <div>Loading...</div>
@@ -115,7 +134,7 @@ class SelectCompany extends Component {
                         <h2>{candidateName}</h2>
                     </div>
                     <div className="col-8">
-                        <Search />
+                        <Search searchHandler={this.searchHandler} />
                         <h2>List Of Companies</h2>
                         <ul>
                             {this.renderCompanies()}

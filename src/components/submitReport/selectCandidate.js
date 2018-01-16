@@ -15,7 +15,8 @@ class SelectCandidate extends Component {
         super(props);
 
         this.state = {
-            candidates: []
+            candidates: [],
+            filterCandidates: []
         }
 
         this.redirection = new RedirectionService();
@@ -24,7 +25,8 @@ class SelectCandidate extends Component {
     loadCandidates = () => {
         communicationService.getData("candidates", (data) => {
             this.setState({
-                candidates: data.data
+                candidates: data.data,
+                filterCandidates: data.data
             })
         }, (error) => {
             console.log(error);
@@ -37,7 +39,7 @@ class SelectCandidate extends Component {
 
     renderCandidates = () => {
         return (
-            this.state.candidates.map((candidate) => {
+            this.state.filterCandidates.map((candidate) => {
                 return (
                     <div id={candidate.id} onClick={(event) => this.selectCandidate(candidate, event.currentTarget)} key={candidate.id} className="col-5 candidate-card">
                         {candidate.avatar ? <img src={candidate.avatar} /> : <img src={candidatePlaceholder} />}
@@ -94,6 +96,27 @@ class SelectCandidate extends Component {
         }
     }
 
+    searchHandler = (searchTerm) => {
+        let listOfCandidates = this.state.candidates;
+        if (searchTerm === "") {
+            this.setState({
+                filterCandidates: listOfCandidates
+            });
+        }
+        else {
+            let filteredList = listOfCandidates.filter(candidate => {
+                return candidate.name.toUpperCase().includes(searchTerm.toUpperCase());
+            });
+            this.setState({
+                filterCandidates: filteredList
+            });
+        }
+    }
+
+    goBack = () => {
+        this.redirection.redirect("#");
+    }
+
     render() {
         if (this.state.candidates.length === 0) {
             return <div>Loading...</div>
@@ -109,10 +132,11 @@ class SelectCandidate extends Component {
                         </ol>
                     </div>
                     <div className="col-8">
-                        <Search />
+                        <Search searchHandler={this.searchHandler}/>
                         <h2>List Of Candidates</h2>
                         {this.renderCandidates()}
                         <button onClick={this.redirectTo} type="button" id="btn" className="btn btn-primary disabled">Next</button>
+                        <button onClick={this.goBack} type="button" id="back" className="btn btn-info">Back</button>
                     </div>
                 </div>
             );
