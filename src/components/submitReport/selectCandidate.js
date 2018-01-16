@@ -5,8 +5,10 @@ import { Link } from 'react-router-dom';
 import { communicationService } from '../../services/communication';
 import './selectCandidate.css';
 import Search from '../common/search';
+import RedirectionService from '../../services/redirectionService';
 
-var candidatePlaceholder = "http://style.anu.edu.au/_anu/4/images/placeholders/person.png";
+let selectManyCandidatesBlocker = 0;
+const candidatePlaceholder = "http://style.anu.edu.au/_anu/4/images/placeholders/person.png";
 
 class SelectCandidate extends Component {
     constructor(props) {
@@ -15,6 +17,8 @@ class SelectCandidate extends Component {
         this.state = {
             candidates: []
         }
+
+        this.redirection = new RedirectionService();
     }
 
     loadCandidates = () => {
@@ -46,18 +50,47 @@ class SelectCandidate extends Component {
     }
 
     selectCandidate = (info, event) => {
-        if (event.hasAttribute("style")) {
-            event.removeAttribute("style")
+        let ifCandidateSelected = document.getElementsByClassName("candidate-card");
+        const makeButtonAvailable = document.getElementsByTagName("button")[0];
+
+        for (var i = 0; i < ifCandidateSelected.length; i++) {
+            if (ifCandidateSelected[i].hasAttribute("style")) {
+                selectManyCandidatesBlocker = 1;
+            }
+        }
+
+        if (selectManyCandidatesBlocker > 0) {
+            console.log("if");
+
+            selectManyCandidatesBlocker = 0;
+            if (event.hasAttribute("style")) {
+                makeButtonAvailable.removeAttribute("class");
+                makeButtonAvailable.setAttribute("class", "btn btn-primary disabled");
+
+            }
+            else {
+                makeButtonAvailable.removeAttribute("class");
+                makeButtonAvailable.setAttribute("class", "btn btn-primary");
+            }
+            event.removeAttribute("style");
         }
         else {
+            console.log("else");
+            localStorage.setItem("candidateID", info.id);
             event.setAttribute("style", "background-color:orange");
+            makeButtonAvailable.removeAttribute("class");
+            makeButtonAvailable.setAttribute("class", "btn btn-primary");
+            makeButtonAvailable.setAttribute("style", "x")
         }
-        const makeButtonAvailable = document.getElementsByTagName("button")[0];
-        makeButtonAvailable.removeAttribute("class");
-        makeButtonAvailable.setAttribute("class", "btn btn-primary");
-        
-        localStorage.setItem("candidateID", info.id);
-        
+    }
+
+    redirectTo = () => {
+        if (!document.getElementById("btn").classList.contains("disabled")) {
+            this.redirection.redirect("selectCompany");
+        }
+        else {
+            alert("Please Select Candidate before proceed");
+        }
     }
 
     render() {
@@ -77,9 +110,7 @@ class SelectCandidate extends Component {
                     <div className="col-8">
                         <Search />
                         {this.renderCandidates()}
-                        <Link to='/selectCompany'>
-                            <button type="button" className="btn btn-primary disabled">Next</button>
-                        </Link>
+                        <button onClick={this.redirectTo} type="button" id="btn" className="btn btn-primary disabled">Next</button>
                     </div>
                 </div>
             );
