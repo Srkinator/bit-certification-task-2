@@ -77,6 +77,7 @@ class SelectCandidate extends Component {
         else {
             console.log("else");
             localStorage.setItem("candidateID", info.id);
+            localStorage.setItem("candidateName", info.name);
             event.setAttribute("style", "background-color:orange");
             makeButtonAvailable.removeAttribute("class");
             makeButtonAvailable.setAttribute("class", "btn btn-primary");
@@ -109,6 +110,7 @@ class SelectCandidate extends Component {
                     </div>
                     <div className="col-8">
                         <Search />
+                        <h2>List Of Candidates</h2>
                         {this.renderCandidates()}
                         <button onClick={this.redirectTo} type="button" id="btn" className="btn btn-primary disabled">Next</button>
                     </div>

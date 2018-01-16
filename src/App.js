@@ -6,6 +6,7 @@ import Header from '../src/components/common/header';
 import ReportList from '../src/components/reportList/reportList';
 import SelectCandidate from '../src/components/submitReport/selectCandidate';
 import SelectCompany from '../src/components/submitReport/selectCompany';
+import SubmitReport from '../src/components/submitReport/submitReport';
 
 class App extends Component {
   render() {
@@ -16,6 +17,7 @@ class App extends Component {
           <Route exact path="/" component={ReportList} />
           <Route path="/selectCandidate" component={SelectCandidate} />
           <Route path="/selectCompany" component={SelectCompany} />
+          <Route path="/submitReport" component={SubmitReport} />
         </Switch>
       </div>
     );
