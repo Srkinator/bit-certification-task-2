@@ -8,7 +8,6 @@ import './submitReport.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
-
 const candidateName = localStorage.getItem("candidateName");
 const companyName = localStorage.getItem("companyName");
 
@@ -26,8 +25,6 @@ class SubmitReport extends Component {
 
         this.redirection = new RedirectionService();
     }
-
-
 
     goBack = () => {
         this.redirection.redirect("selectCompany");
@@ -54,12 +51,9 @@ class SubmitReport extends Component {
     handleNotesChange = (notes) => {
         this.setState({
             notes: notes.target.value
-        }, () => {
-            console.log("New state in ASYNC callback:", this.enableButton(this.state.notes));
-            this.enableButton(this.state.notes);
-        });
+        })
     }
-    componentDidUpdate(){
+    componentDidUpdate() {
         this.enableButton(this.state.notes)
     }
 
@@ -67,11 +61,9 @@ class SubmitReport extends Component {
         let date = this.state.startDate._d;
         let phase = this.state.phase;
         let status = this.state.status;
-        let notesCheck = this.state.notes;
 
         const button = document.getElementById("next");
 
-        console.log(!!notesCheck !="", "asdasdasdasdasdasd");
         if (date && phase && status && notes) {
             button.removeAttribute("class");
             button.setAttribute("class", "btn btn-primary")
@@ -83,12 +75,12 @@ class SubmitReport extends Component {
         }
     }
 
+    //collect info and make acceptable object to server before sending
     redirectTo = () => {
         let interviewDate = this.state.startDate._d;
         let phase = this.state.phase;
         let status = this.state.status;
         let note = this.state.notes;
-        let id = 1;
         const candidateName = localStorage.getItem("candidateName");
         const candidateId = localStorage.getItem("candidateID");
         const companyName = localStorage.getItem("companyName");
@@ -107,8 +99,7 @@ class SubmitReport extends Component {
 
         if (!document.getElementById("next").classList.contains("disabled")) {
             communicationService.submitReport(data, (response) => {
-                console.log(response);
-                id++;
+                console.warn(response);
             }, (error) => {
                 console.log(error);
             })

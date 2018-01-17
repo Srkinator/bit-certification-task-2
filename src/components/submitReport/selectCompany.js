@@ -60,7 +60,6 @@ class SelectCompany extends Component {
         }
 
         if (selectManyCompaniesBlocker > 0) {
-            console.log("if");
 
             selectManyCompaniesBlocker = 0;
             if (event.hasAttribute("style")) {
@@ -75,7 +74,6 @@ class SelectCompany extends Component {
             event.removeAttribute("style");
         }
         else {
-            console.log("else");
             localStorage.setItem("companyID", info.id);
             localStorage.setItem("companyName", info.name);
             event.setAttribute("style", "background-color:orange");

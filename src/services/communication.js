@@ -31,7 +31,6 @@ class CommunicationService {
     }
 
     submitReport(data, dataHandler, errorHandler) {
-        console.log(data);
         axios({
             method: "POST",
             url: `${URL}/reports`,

@@ -71,15 +71,15 @@ class ReportList extends Component {
     deleteReport = (reportInfo) => {
         let confirmDelete = confirm("Are you sure you want to delete this report?");
 
-        if (confirmDelete == true){
-            communicationService.deleteReport(reportInfo.id,(response)=>{
+        if (confirmDelete === true) {
+            communicationService.deleteReport(reportInfo.id, (response) => {
                 console.log(response);
-            }, (error)=>{
+            }, (error) => {
                 console.log(error);
             });
             this.loadData();
         }
-        else{
+        else {
             this.loadData();
         }
 
@@ -107,67 +107,72 @@ class ReportList extends Component {
     }
 
     render() {
-        return (
-            <div>
-                <Search searchHandler={this.searchHandler} />
-                <div className="table-responsive">
-                    <table className="table">
-                        <tbody>
-                            <tr>
-                                <th>Company</th>
-                                <th>Candidate</th>
-                                <th>Interview Date</th>
-                                <th>Status</th>
-                                <th>View/Delete Report</th>
-                            </tr>
-                            {this.renderReports()}
-                        </tbody>
-                    </table>
-                    <Modal
-                        className="Modal__Bootstrap modal-dialog"
-                        isOpen={this.state.showModal}
-                        ariaHideApp={false}
-                    >
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h6>Candidate</h6>
-                                <h4 className="modal-title">{this.state.modalInfo.candidateName}</h4>
-                                <button type="button" className="close" onClick={() => { this.setState({ showModal: false }) }}>
-                                    <span aria-hidden="true">&times;</span>
-                                    <span className="sr-only">Close</span>
-                                </button>
-                            </div>
-                            <div className="modal-body modalBox">
-                                <div className="row">
-                                    <div className="col-4">
-                                        <div className="modal-info">
-                                            <h6>Company</h6>
-                                            <h4>{this.state.modalInfo.companyName}</h4>
+        if (this.state.companies.length === 0) {
+            return <div>Loading...</div>
+        }
+        else {
+            return (
+                <div>
+                    <Search searchHandler={this.searchHandler} />
+                    <div className="table-responsive">
+                        <table className="table">
+                            <tbody>
+                                <tr>
+                                    <th>Company</th>
+                                    <th>Candidate</th>
+                                    <th>Interview Date</th>
+                                    <th>Status</th>
+                                    <th>View/Delete Report</th>
+                                </tr>
+                                {this.renderReports()}
+                            </tbody>
+                        </table>
+                        <Modal
+                            className="Modal__Bootstrap modal-dialog"
+                            isOpen={this.state.showModal}
+                            ariaHideApp={false}
+                        >
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h6>Candidate</h6>
+                                    <h4 className="modal-title">{this.state.modalInfo.candidateName}</h4>
+                                    <button type="button" className="close" onClick={() => { this.setState({ showModal: false }) }}>
+                                        <span aria-hidden="true">&times;</span>
+                                        <span className="sr-only">Close</span>
+                                    </button>
+                                </div>
+                                <div className="modal-body modalBox">
+                                    <div className="row">
+                                        <div className="col-4">
+                                            <div className="modal-info">
+                                                <h6>Company</h6>
+                                                <h4>{this.state.modalInfo.companyName}</h4>
+                                            </div>
+                                            <div className="modal-info">
+                                                <h6>Interview date</h6>
+                                                <h4>{new Date(this.state.modalInfo.interviewDate).toLocaleDateString()}</h4>
+                                            </div>
+                                            <div className="modal-info">
+                                                <h6>Status</h6>
+                                                <h4>{this.state.modalInfo.status}</h4>
+                                            </div>
+                                            <div className="modal-info">
+                                                <h6>Phase</h6>
+                                                <h4>{this.state.modalInfo.phase}</h4>
+                                            </div>
                                         </div>
-                                        <div className="modal-info">
-                                            <h6>Interview date</h6>
-                                            <h4>{new Date(this.state.modalInfo.interviewDate).toLocaleDateString()}</h4>
+                                        <div className="col-8">
+                                            <h6>Notes</h6>
+                                            {this.state.modalInfo.note}
                                         </div>
-                                        <div className="modal-info">
-                                            <h6>Status</h6>
-                                            <h4>{this.state.modalInfo.status}</h4>
-                                        </div>
-                                        <div className="modal-info">
-                                            <h6>Phase</h6>
-                                            <h4>{this.state.modalInfo.phase}</h4>
-                                        </div>
-                                    </div>
-                                    <div className="col-8">
-                                        <h6>Notes</h6>
-                                        {this.state.modalInfo.note}
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </Modal>
+                        </Modal>
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        }
     }
 }
 

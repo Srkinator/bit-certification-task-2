@@ -1,6 +1,5 @@
 
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 
 import { communicationService } from '../../services/communication';
 import './selectCandidate.css';
@@ -42,7 +41,7 @@ class SelectCandidate extends Component {
             this.state.filterCandidates.map((candidate) => {
                 return (
                     <div id={candidate.id} onClick={(event) => this.selectCandidate(candidate, event.currentTarget)} key={candidate.id} className="col-5 candidate-card">
-                        {candidate.avatar ? <img src={candidate.avatar} /> : <img src={candidatePlaceholder} />}
+                        {candidate.avatar ? <img alt="candidate Avatar" src={candidate.avatar} /> : <img alt="candidate Avatar" src={candidatePlaceholder} />}
                         <h3>{candidate.name}</h3>
                         <p>{candidate.email}</p>
                     </div>
@@ -76,7 +75,6 @@ class SelectCandidate extends Component {
             event.removeAttribute("style");
         }
         else {
-            console.log("else");
             localStorage.setItem("candidateID", info.id);
             localStorage.setItem("candidateName", info.name);
             event.setAttribute("style", "background-color:orange");
