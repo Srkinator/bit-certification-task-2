@@ -37,45 +37,47 @@ class SubmitReport extends Component {
         this.setState({
             startDate: date
         })
-        this.enableButton();
     }
 
     handlePhaseChange = (phase) => {
         this.setState({
             phase: phase.target.value
         })
-        this.enableButton();
     }
 
     handleStatusChange = (status) => {
         this.setState({
             status: status.target.value
         })
-        this.enableButton();
     }
 
     handleNotesChange = (notes) => {
         this.setState({
             notes: notes.target.value
-        })
-        this.enableButton(notes.target.value);
+        }, () => {
+            console.log("New state in ASYNC callback:", this.enableButton(this.state.notes));
+            this.enableButton(this.state.notes);
+        });
+    }
+    componentDidUpdate(){
+        this.enableButton(this.state.notes)
     }
 
     enableButton = (notes) => {
         let date = this.state.startDate._d;
         let phase = this.state.phase;
         let status = this.state.status;
+        let notesCheck = this.state.notes;
+
         const button = document.getElementById("next");
-        if (date.length > 0) {
 
-        }
-
-        console.log(date.toString());
+        console.log(!!notesCheck !="", "asdasdasdasdasdasd");
         if (date && phase && status && notes) {
             button.removeAttribute("class");
             button.setAttribute("class", "btn btn-primary")
         }
-        if (!notes) {
+
+        if (notes === "") {
             button.removeAttribute("class");
             button.setAttribute("class", "btn btn-primary disabled")
         }
@@ -92,25 +94,24 @@ class SubmitReport extends Component {
         const companyName = localStorage.getItem("companyName");
         const companyId = localStorage.getItem("companyID");
 
-        let data ={
-            candidateId:candidateId,
-            candidateName:candidateName,
-            companyId:companyId,
-            companyName:companyName,
-            interviewDate:interviewDate.toString(),
-            phase:phase,
-            status:status,
-            note:note
+        let data = {
+            candidateId: candidateId,
+            candidateName: candidateName,
+            companyId: companyId,
+            companyName: companyName,
+            interviewDate: interviewDate.toString(),
+            phase: phase,
+            status: status,
+            note: note
         }
 
-            console.log(data);
         if (!document.getElementById("next").classList.contains("disabled")) {
-                communicationService.submitReport(data, (response)=>{
-                    console.log(response);
-                    id++;
-                }, (error)=>{
-                    console.log(error);
-                })
+            communicationService.submitReport(data, (response) => {
+                console.log(response);
+                id++;
+            }, (error) => {
+                console.log(error);
+            })
 
             this.redirection.redirect("#");
         }
@@ -140,8 +141,6 @@ class SubmitReport extends Component {
                             <DatePicker
                                 selected={this.state.startDate}
                                 onChange={this.handleDateChange}
-                                isClearable={true}
-                                placeholderText="Date is cleared!"
                                 peekNextMonth
                                 showMonthDropdown
                                 showYearDropdown
@@ -167,7 +166,7 @@ class SubmitReport extends Component {
                         </div>
                         <div className="col-12 notes">
                             <h4>Notes</h4>
-                            <textarea onChange={(e) => this.handleNotesChange(e)} rows="10" cols="40" placeholder="Report notes..." required></textarea>
+                            <textarea id="notes" onChange={(e) => this.handleNotesChange(e)} rows="10" cols="40" placeholder="Report notes..." required></textarea>
                         </div>
                         <div className="col-12">
                             <button onClick={this.redirectTo} type="button" id="next" className="btn btn-primary disabled">Next</button>

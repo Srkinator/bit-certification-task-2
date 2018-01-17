@@ -62,7 +62,6 @@ class SelectCandidate extends Component {
         }
 
         if (selectManyCandidatesBlocker > 0) {
-            console.log("if");
 
             selectManyCandidatesBlocker = 0;
             if (event.hasAttribute("style")) {

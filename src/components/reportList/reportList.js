@@ -69,7 +69,6 @@ class ReportList extends Component {
     }
 
     deleteReport = (reportInfo) => {
-        console.log(reportInfo);
         let confirmDelete = confirm("Are you sure you want to delete this report?");
 
         if (confirmDelete == true){
