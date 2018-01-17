@@ -40,7 +40,7 @@ class SelectCandidate extends Component {
         return (
             this.state.filterCandidates.map((candidate) => {
                 return (
-                    <div id={candidate.id} onClick={(event) => this.selectCandidate(candidate, event.currentTarget)} key={candidate.id} className="col-5 candidate-card">
+                    <div id={candidate.id} onClick={(event) => this.selectCandidate(candidate, event.currentTarget)} key={candidate.id} className=" col-10-xs col-10-sm col-md-12 col-lg-5 candidate-card">
                         {candidate.avatar ? <img alt="candidate Avatar" src={candidate.avatar} /> : <img alt="candidate Avatar" src={candidatePlaceholder} />}
                         <h3>{candidate.name}</h3>
                         <p>{candidate.email}</p>
@@ -77,7 +77,7 @@ class SelectCandidate extends Component {
         else {
             localStorage.setItem("candidateID", info.id);
             localStorage.setItem("candidateName", info.name);
-            event.setAttribute("style", "background-color:orange");
+            event.setAttribute("style", "background-color:#b4cac9");
             makeButtonAvailable.removeAttribute("class");
             makeButtonAvailable.setAttribute("class", "btn btn-primary");
             makeButtonAvailable.setAttribute("style", "x")
@@ -121,16 +121,16 @@ class SelectCandidate extends Component {
         else {
             return (
                 <div className="row">
-                    <div className="col-4 wizard-selector">
+                    <div className="col-xs-6 col-4 wizard-selector">
                         <ol>
                             <li><b>Select Candidate</b></li>
                             <li>Select Company</li>
                             <li>Fill Report Details</li>
                         </ol>
                     </div>
-                    <div className="col-8">
-                        <Search searchHandler={this.searchHandler}/>
+                    <div className="col-xs-6 col-8">
                         <h2>List Of Candidates</h2>
+                        <Search searchHandler={this.searchHandler}/>
                         {this.renderCandidates()}
                         <button onClick={this.redirectTo} type="button" id="btn" className="btn btn-primary disabled">Next</button>
                         <button onClick={this.goBack} type="button" id="back" className="btn btn-info">Back</button>

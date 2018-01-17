@@ -1,5 +1,5 @@
 .header{
-    background-color: 	#cececa;
+    background-color: 	#b4cac9;
     color: rgb(0, 0, 0);
     width: 100%;
     margin-bottom: 5%;
@@ -15,6 +15,12 @@
     border: 1px black solid;
     background-color: white;
 }
+.selected{
+    display: inline;
+    padding: 0px 10px;
+    border: 1px black solid;
+    background-color: #89b5bd !important;
+}
 
 .header ul a{
     text-decoration: none;
@@ -27,4 +33,16 @@
 .header .row{
     padding: 0;
     margin: 0;
+}
+
+@media only screen and (max-width: 576px) {
+    .header ul{
+        list-style-type: none;
+        margin-top: 20px;
+        float: left;
+    }
+    header h1 {
+        text-align: center;
+        padding-top: 10px;
+    }
 }

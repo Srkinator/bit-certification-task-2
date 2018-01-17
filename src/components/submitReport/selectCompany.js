@@ -76,7 +76,7 @@ class SelectCompany extends Component {
         else {
             localStorage.setItem("companyID", info.id);
             localStorage.setItem("companyName", info.name);
-            event.setAttribute("style", "background-color:orange");
+            event.setAttribute("style", "background-color:#b4cac9");
             makeButtonAvailable.removeAttribute("class");
             makeButtonAvailable.setAttribute("class", "btn btn-primary");
             makeButtonAvailable.setAttribute("style", "x")
@@ -132,8 +132,8 @@ class SelectCompany extends Component {
                         <h2>{candidateName}</h2>
                     </div>
                     <div className="col-8">
-                        <Search searchHandler={this.searchHandler} />
                         <h2>List Of Companies</h2>
+                        <Search searchHandler={this.searchHandler} />
                         <ul>
                             {this.renderCompanies()}
                         </ul>

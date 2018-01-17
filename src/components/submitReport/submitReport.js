@@ -139,14 +139,14 @@ class SubmitReport extends Component {
                                 maxDate={moment()}
                             />
                         </div>
-                        <div className="col-3">
+                        <div className="col-3 col-xs-12">
                             <h4>Phase</h4>
                             <select onChange={(e) => this.handlePhaseChange(e)} required>
                                 <option>passed</option>
                                 <option>declined</option>
                             </select>
                         </div>
-                        <div className="col-3">
+                        <div className="col-3 col-xs-12">
                             <h4>Status</h4>
                             <select onChange={(e) => this.handleStatusChange(e)} required>
                                 <option>cv</option>

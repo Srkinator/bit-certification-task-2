@@ -73,7 +73,7 @@ class ReportList extends Component {
 
         if (confirmDelete === true) {
             communicationService.deleteReport(reportInfo.id, (response) => {
-                console.log(response);
+                this.loadData();
             }, (error) => {
                 console.log(error);
             });
@@ -86,6 +86,10 @@ class ReportList extends Component {
     }
 
     componentDidMount() {
+        this.loadData();
+    }
+
+    componentWillMount(){
         this.loadData();
     }
 
@@ -107,16 +111,16 @@ class ReportList extends Component {
     }
 
     render() {
-        if (this.state.companies.length === 0) {
+        if (this.state.reports.length === 0) {
             return <div>Loading...</div>
         }
         else {
             return (
                 <div>
                     <Search searchHandler={this.searchHandler} />
-                    <div className="table-responsive">
+                    <div className="table-responsive" style={{overflow:"auto"}}>
                         <table className="table">
-                            <tbody>
+                            <tbody className="container">
                                 <tr>
                                     <th>Company</th>
                                     <th>Candidate</th>
