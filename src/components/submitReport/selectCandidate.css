@@ -58,3 +58,51 @@ img {
         word-wrap: break-word;
     }
 }
+
+.candidate-card {
+    padding: 0;
+    text-align: center;
+    margin: 2% auto;
+    position: relative;
+    overflow: hidden;
+    background-color: white;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    margin: 2% 2%;
+  
+  }
+  
+  .candidate-card:hover{
+    box-shadow: 0 15px 18px 0 rgba(0,0,0,0.27), 0 20px 60px 0 rgba(0,0,0,0.2);
+  }
+  h2{
+      text-align: center;
+  }
+  
+.candidate-card img {
+    width: 100% !important;
+    -moz-transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+    margin-bottom: 5%; }
+
+.candidate-card:hover {
+        border: solid 1px grey;
+        border-radius: 10%;
+        cursor: pointer; }
+      
+.candidate-card:hover img {
+        -moz-transform: scale(1.1);
+        -webkit-transform: scale(1.1);
+        transform: scale(1.1); }
+
+.btn-info {
+    background-color:#859190;
+}
+
+.btn-info:hover{
+    background-color:#627a78;
+}
+
+.btn-primary.disabled {
+    background-color:#95cbe0;
+}

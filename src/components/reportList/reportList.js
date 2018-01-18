@@ -18,7 +18,8 @@ class ReportList extends Component {
             showModal: false,
             modalInfo: [],
             filterCandidates: [],
-            reports: []
+            reports: [],
+            showServerError: false
         }
 
     }
@@ -30,7 +31,9 @@ class ReportList extends Component {
                 reports: data.data
             });
         }, (error) => {
-            console.log(error);
+            this.setState({
+                showServerError: true
+            })
         });
     }
 
@@ -75,7 +78,9 @@ class ReportList extends Component {
             communicationService.deleteReport(reportInfo.id, (response) => {
                 this.loadData();
             }, (error) => {
-                console.log(error);
+                this.setState({
+                    showServerError: true
+                })
             });
             this.loadData();
         }
@@ -131,6 +136,7 @@ class ReportList extends Component {
                                 {this.renderReports()}
                             </tbody>
                         </table>
+                        {this.state.showServerError ? <h4 style={{color:"red"}}>Server problem, we'll be looking into it as soon as possible!</h4> : ""}
                         <Modal
                             className="Modal__Bootstrap modal-dialog"
                             isOpen={this.state.showModal}

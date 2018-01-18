@@ -14,7 +14,9 @@ class SelectCompany extends Component {
 
         this.state = {
             companies: [],
-            filterCompanies: []
+            filterCompanies: [],
+            showError: false,
+            showServerError: false
         }
 
         this.redirection = new RedirectionService();
@@ -29,7 +31,9 @@ class SelectCompany extends Component {
                 filterCompanies: data.data
             })
         }, (error) => {
-            console.log(error);
+            this.setState({
+                showServerError:true
+            })
         })
     }
 
@@ -76,10 +80,14 @@ class SelectCompany extends Component {
         else {
             localStorage.setItem("companyID", info.id);
             localStorage.setItem("companyName", info.name);
-            event.setAttribute("style", "background-color:#b4cac9");
+            event.setAttribute("style", "border:#b4cac9 solid 20px; background-color:#b4cac9 ");
             makeButtonAvailable.removeAttribute("class");
             makeButtonAvailable.setAttribute("class", "btn btn-primary");
             makeButtonAvailable.setAttribute("style", "x")
+
+            this.setState({
+                showError: false
+            });
         }
     }
 
@@ -88,7 +96,9 @@ class SelectCompany extends Component {
             this.redirection.redirect("submitReport");
         }
         else {
-            alert("Please Select Company before proceed");
+            this.setState({
+                showError: true
+            })
         }
     }
 
@@ -139,6 +149,8 @@ class SelectCompany extends Component {
                         </ul>
                         <button onClick={this.redirectTo} type="button" id="next" className="btn btn-primary disabled">Next</button>
                         <button onClick={this.goBack} type="button" id="back" className="btn btn-info">Back</button>
+                        {this.state.showError ? <h4 style={{color:"red"}}>Please select company before proceed!</h4> : ""}
+                        {this.state.showServerError ? <h4 style={{color:"red"}}>Server problem, we'll be looking into it as soon as possible!</h4> : ""}
                     </div>
                 </div>
             );

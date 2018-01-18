@@ -15,7 +15,9 @@ class SelectCandidate extends Component {
 
         this.state = {
             candidates: [],
-            filterCandidates: []
+            filterCandidates: [],
+            showError: false,
+            showServerError: false
         }
 
         this.redirection = new RedirectionService();
@@ -28,7 +30,9 @@ class SelectCandidate extends Component {
                 filterCandidates: data.data
             })
         }, (error) => {
-            console.log(error);
+            this.setState({
+                showServerError:true
+            })
         })
     }
 
@@ -77,10 +81,14 @@ class SelectCandidate extends Component {
         else {
             localStorage.setItem("candidateID", info.id);
             localStorage.setItem("candidateName", info.name);
-            event.setAttribute("style", "background-color:#b4cac9");
+            event.setAttribute("style", "border:#b4cac9 solid 20px; background-color:#b4cac9 ");
             makeButtonAvailable.removeAttribute("class");
             makeButtonAvailable.setAttribute("class", "btn btn-primary");
             makeButtonAvailable.setAttribute("style", "x")
+
+            this.setState({
+                showError: false
+            })
         }
     }
 
@@ -89,7 +97,9 @@ class SelectCandidate extends Component {
             this.redirection.redirect("selectCompany");
         }
         else {
-            alert("Please Select Candidate before proceed");
+            this.setState({
+                showError: true
+            });
         }
     }
 
@@ -134,6 +144,8 @@ class SelectCandidate extends Component {
                         {this.renderCandidates()}
                         <button onClick={this.redirectTo} type="button" id="btn" className="btn btn-primary disabled">Next</button>
                         <button onClick={this.goBack} type="button" id="back" className="btn btn-info">Back</button>
+                        {this.state.showError ? <h4 style={{color:"red"}}>Please select candidate before proceed!</h4> : ""}
+                        {this.state.showServerError ? <h4 style={{color:"red"}}>Server problem, we'll be looking into it as soon as possible!</h4> : ""}
                     </div>
                 </div>
             );

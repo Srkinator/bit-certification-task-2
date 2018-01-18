@@ -20,7 +20,10 @@ class SubmitReport extends Component {
             startDate: moment(),
             phase: "",
             status: "",
-            notes: ""
+            notes: "",
+            showError: false,
+            showSuccess: false,
+            serverProblem: false
         }
 
         this.redirection = new RedirectionService();
@@ -34,27 +37,41 @@ class SubmitReport extends Component {
         this.setState({
             startDate: date
         })
+        this.disableShowError();
     }
 
     handlePhaseChange = (phase) => {
         this.setState({
             phase: phase.target.value
         })
+        this.disableShowError();
     }
 
     handleStatusChange = (status) => {
         this.setState({
             status: status.target.value
         })
+        this.disableShowError();
     }
 
     handleNotesChange = (notes) => {
         this.setState({
             notes: notes.target.value
         })
+        this.disableShowError();
     }
+
+    disableShowError =() =>{
+        if (document.getElementById("next").className === "btn btn-primary") {
+            this.setState({
+                showError: false
+            })
+        }
+    }
+
     componentDidUpdate() {
         this.enableButton(this.state.notes)
+
     }
 
     enableButton = (notes) => {
@@ -67,12 +84,14 @@ class SubmitReport extends Component {
         if (date && phase && status && notes) {
             button.removeAttribute("class");
             button.setAttribute("class", "btn btn-primary")
+            
         }
 
         if (notes === "") {
             button.removeAttribute("class");
             button.setAttribute("class", "btn btn-primary disabled")
         }
+
     }
 
     //collect info and make acceptable object to server before sending
@@ -99,15 +118,22 @@ class SubmitReport extends Component {
 
         if (!document.getElementById("next").classList.contains("disabled")) {
             communicationService.submitReport(data, (response) => {
-                console.warn(response);
+                this.setState({
+                    showSuccess: true,
+                    serverProblem: false
+                })
             }, (error) => {
-                console.log(error);
+                this.setState({
+                    serverProblem: true
+                })
             })
 
             this.redirection.redirect("#");
         }
         else {
-            alert("Please fill out all fields before submiting report");
+            this.setState({
+                showError: true
+            })
         }
     }
 
@@ -162,6 +188,9 @@ class SubmitReport extends Component {
                         <div className="col-12">
                             <button onClick={this.redirectTo} type="button" id="next" className="btn btn-primary disabled">Next</button>
                             <button onClick={this.goBack} type="button" id="back" className="btn btn-info">Back</button>
+                            {this.state.showError ? <h4 style={{color:"red"}}>Please fill out all fields before submiting report!</h4> : ""}
+                            {this.state.showSuccess ? <h4 style={{color:"red"}}>Report delivered to server successfully!</h4> : ""}
+                            {this.state.serverProblem ? <h4 style={{color:"red"}}>Server problem, we'll be looking into it as soon as possible!</h4> : ""}
                         </div>
                     </div>
                 </div>
